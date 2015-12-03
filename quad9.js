@@ -10393,9 +10393,24 @@ Elm.Quad9.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var update = F2(function (action,model) {    var _p0 = action;if (_p0.ctor === "Increment") {    return model;} else {    return model;}});
-   var Decrement = {ctor: "Decrement"};
-   var Increment = {ctor: "Increment"};
+   var update = F2(function (action,model) {
+      var _p0 = action;
+      switch (_p0.ctor)
+      {case "Left": return model;
+         case "Right": return model;
+         case "Up": return model;
+         case "Down": return model;
+         case "Autoplay": return model;
+         case "Restart": return model;
+         default: return model;}
+   });
+   var SaveGame = {ctor: "SaveGame"};
+   var Restart = {ctor: "Restart"};
+   var Autoplay = {ctor: "Autoplay"};
+   var Down = {ctor: "Down"};
+   var Up = {ctor: "Up"};
+   var Right = {ctor: "Right"};
+   var Left = {ctor: "Left"};
    var gridCell = function (_p1) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-cell")]),_U.list([]));};
    var gridNums = _U.range(0,7);
    var gridRow = function (_p2) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-row")]),A2($List.map,gridCell,gridNums));};
@@ -10414,8 +10429,13 @@ Elm.Quad9.make = function (_elm) {
                               ,gridRow: gridRow
                               ,defaultBoard: defaultBoard
                               ,view: view
-                              ,Increment: Increment
-                              ,Decrement: Decrement
+                              ,Left: Left
+                              ,Right: Right
+                              ,Up: Up
+                              ,Down: Down
+                              ,Autoplay: Autoplay
+                              ,Restart: Restart
+                              ,SaveGame: SaveGame
                               ,update: update
                               ,main: main};
 };

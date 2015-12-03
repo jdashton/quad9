@@ -52,7 +52,7 @@ view address model =
 -- UPDATE
 
 
-type Action = Left | Right | Up | Down
+type Action = Left | Right | Up | Down | Autoplay | Restart | SaveGame
 
 
 update action model =
@@ -61,6 +61,9 @@ update action model =
     Right -> model
     Up -> model
     Down -> model
+    Autoplay -> model
+    Restart -> model
+    SaveGame -> model
 
 
 -- MAIN
