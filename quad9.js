@@ -10382,6 +10382,7 @@ Elm.Quad9.make = function (_elm) {
    _elm.Quad9 = _elm.Quad9 || {};
    if (_elm.Quad9.values) return _elm.Quad9.values;
    var _U = Elm.Native.Utils.make(_elm),
+   $Array = Elm.Array.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
    $Html = Elm.Html.make(_elm),
@@ -10411,23 +10412,111 @@ Elm.Quad9.make = function (_elm) {
    var Up = {ctor: "Up"};
    var Right = {ctor: "Right"};
    var Left = {ctor: "Left"};
-   var gridCell = function (_p1) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-cell")]),_U.list([]));};
-   var gridNums = _U.range(0,7);
-   var gridRow = function (_p2) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-row")]),A2($List.map,gridCell,gridNums));};
-   var defaultBoard = A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-container")]),A2($List.map,gridRow,gridNums));
-   var view = F2(function (address,model) {
-      return A2($Html.div,_U.list([]),_U.list([defaultBoard,A2($Html.div,_U.list([$Html$Attributes.$class("elm-tile-container")]),_U.list([]))]));
+   var promote = function (s) {
+      var _p1 = s;
+      switch (_p1)
+      {case "": return "K";
+         case "K": return "M";
+         case "M": return "G";
+         case "G": return "T";
+         case "T": return "P";
+         case "P": return "E";
+         case "E": return "Z";
+         case "Z": return "Y";
+         default: return "a lot & a lot";}
+   };
+   var reduceNum = function (_p2) {
+      reduceNum: while (true) {
+         var _p3 = _p2;
+         var _p5 = _p3._1;
+         var _p4 = _p3._0;
+         if (_U.cmp(_p4,512) > 0) {
+               var _v3 = {ctor: "_Tuple2",_0: _p4 / 1024 | 0,_1: promote(_p5)};
+               _p2 = _v3;
+               continue reduceNum;
+            } else return {ctor: "_Tuple2",_0: _p4,_1: _p5};
+      }
+   };
+   var abbreviate = function (_p6) {
+      var _p7 = _p6;
+      var _p9 = _p7._1;
+      var _p8 = _p7._0;
+      switch (_p8)
+      {case 128: return A2($Basics._op["++"],"⅛",promote(_p9));
+         case 256: return A2($Basics._op["++"],"¼",promote(_p9));
+         case 512: return A2($Basics._op["++"],"½",promote(_p9));
+         default: return A2($Basics._op["++"],$Basics.toString(_p8),_p9);}
+   };
+   var convertNum = function (n) {
+      var _p10 = reduceNum({ctor: "_Tuple2",_0: n,_1: ""});
+      var o = _p10._0;
+      var suf = _p10._1;
+      return abbreviate({ctor: "_Tuple2",_0: o,_1: suf});
+   };
+   var showTile = function (_p11) {
+      var _p12 = _p11;
+      var _p13 = _p12._1;
+      if (_p13.ctor === "Just") {
+            var _p14 = _p13._0;
+            return A2($Html.div,
+            _U.list([$Html$Attributes.$class(A2($Basics._op["++"],
+            "tile",
+            A2($Basics._op["++"],
+            " tile-",
+            A2($Basics._op["++"],
+            $Basics.toString(_p14),
+            A2($Basics._op["++"],
+            " tile-position-",
+            A2($Basics._op["++"],$Basics.toString(_p12._0._0),A2($Basics._op["++"],"-",A2($Basics._op["++"],$Basics.toString(_p12._0._1)," tile-new"))))))))]),
+            _U.list([$Html.text(convertNum(_p14))]));
+         } else {
+            return $Html.text("");
+         }
+   };
+   var gridCell = function (_p15) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-cell")]),_U.list([]));};
+   var gridRow = F2(function (size,_p16) {
+      return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-row")]),A2($List.map,gridCell,_U.range(1,size)));
    });
-   var initialModel = {grid: A3($Matrix.repeat,8,8,0)};
+   var defaultBoard = function (size) {
+      return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-container")]),A2($List.map,gridRow(size),_U.range(1,size)));
+   };
+   var addTile = F2(function (_p17,model) {    var _p18 = _p17;return _U.update(model,{grid: A4($Matrix.set,_p18._0._0,_p18._0._1,_p18._1,model.grid)});});
+   var realTile = function (_p19) {    var _p20 = _p19;return !_U.eq(_p20._1,$Maybe.Nothing);};
+   var viewTiles = function (model) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("elm-tile-container")]),
+      A2($List.map,showTile,$Array.toList(A2($Array.filter,realTile,$Matrix.toIndexedArray(model.grid)))));
+   };
+   var view = F2(function (address,model) {    return A2($Html.div,_U.list([]),_U.list([defaultBoard(model.size),viewTiles(model)]));});
+   var emptyTile = function (_p21) {    var _p22 = _p21;return _U.eq(_p22._1,$Maybe.Nothing);};
+   var availableCells = function (model) {    return A2($Array.filter,emptyTile,$Matrix.toIndexedArray(model.grid));};
+   var initialSize = 8;
+   var initialModel = A2(addTile,
+   {ctor: "_Tuple2",_0: {ctor: "_Tuple2",_0: 2,_1: 3},_1: $Maybe.Just(512 * 1024 * 1024 * 1024)},
+   A2(addTile,
+   {ctor: "_Tuple2",_0: {ctor: "_Tuple2",_0: 1,_1: 1},_1: $Maybe.Just(256 * 1024 * 1024)},
+   A2(addTile,
+   {ctor: "_Tuple2",_0: {ctor: "_Tuple2",_0: 3,_1: 5},_1: $Maybe.Just(128 * 1024)},
+   {grid: A3($Matrix.repeat,initialSize,initialSize,$Maybe.Nothing),size: initialSize,moves: 0})));
    var main = $StartApp$Simple.start({model: initialModel,view: view,update: update});
-   var GameState = function (a) {    return {grid: a};};
+   var GameState = F3(function (a,b,c) {    return {grid: a,size: b,moves: c};});
    return _elm.Quad9.values = {_op: _op
                               ,GameState: GameState
+                              ,initialSize: initialSize
                               ,initialModel: initialModel
-                              ,gridNums: gridNums
+                              ,emptyTile: emptyTile
+                              ,realTile: realTile
+                              ,availableCells: availableCells
+                              ,addTile: addTile
                               ,gridCell: gridCell
                               ,gridRow: gridRow
                               ,defaultBoard: defaultBoard
+                              ,convertNum: convertNum
+                              ,abbreviate: abbreviate
+                              ,promote: promote
+                              ,reduceNum: reduceNum
+                              ,showTile: showTile
+                              ,viewTiles: viewTiles
                               ,view: view
                               ,Left: Left
                               ,Right: Right
