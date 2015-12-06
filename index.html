@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <title></title>
+    <script src="port_based_random.js"></script>
+  </head>
+  <body>
+    <p>Move your mouse to generate new random numbers.</p>
+    <script>Elm.fullscreen(Elm.PortBasedRandom, {primer: Date.now()})</script>
+    <script>Elm.fullscreen(Elm.PortBasedRandom, {primer: Math.floor((Math.random() - 0.5) * 4294967295)})</script>
+  </body>
+</html>
