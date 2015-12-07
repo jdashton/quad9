@@ -43,25 +43,25 @@ HTMLActuator.prototype.clearContainer = function (container) {
 HTMLActuator.prototype.promote = function (unit) {
     switch (unit) {
         case '' :
-            return 'K'
+            return 'K';
         case 'K' :
-            return 'M'
+            return 'M';
         case 'M' :
-            return 'G'
+            return 'G';
         case 'G' :
-            return 'T'
+            return 'T';
         case 'T' :
-            return 'P'
+            return 'P';
         case 'P' :
-            return 'E'
+            return 'E';
         case 'E' :
-            return 'Z'
+            return 'Z';
         case 'Z' :
-            return 'Y'
+            return 'Y';
         default :
             return 'a lot & a lot'
     }
-}
+};
 
 HTMLActuator.prototype.translateValue = function (value) {
     if (value < 128) {
@@ -76,7 +76,7 @@ HTMLActuator.prototype.translateValue = function (value) {
         v = this.translateValue(value / 1024);
         return {v: v.v, c: this.promote(v.c)};
     }
-}
+};
 
 HTMLActuator.prototype.addTile = function (tile) {
     var self = this;
