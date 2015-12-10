@@ -177,8 +177,11 @@ hr {
     }
 }
 
-.game-container {
+.game-container, #elm-game-container {
+    display: inline-block;
     margin-top: 40px;
+    margin-left: 2px;
+    margin-right: 2px;
     position: relative;
     padding: 15px;
     cursor: default;
@@ -192,6 +195,7 @@ hr {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    float: left;
 }
 
 .game-container .game-message, .game-container .saved-game-message {
@@ -244,26 +248,26 @@ hr {
     display: block;
 }
 
-.grid-container {
+.grid-container, .elm-grid-container {
     position: absolute;
     z-index: 1;
 }
 
-.grid-row {
+.grid-row, .elm-grid-row {
     margin-bottom: 15px;
 }
 
-.grid-row:last-child {
+.grid-row:last-child, .elm-grid-row:last-child {
     margin-bottom: 0;
 }
 
-.grid-row:after {
+.grid-row:after, .elm-grid-row:after {
     content: "";
     display: block;
     clear: both;
 }
 
-.grid-cell {
+.grid-cell, .elm-grid-cell {
     width: 106.25px;
     height: 106.25px;
     margin-right: 15px;
@@ -272,11 +276,11 @@ hr {
     background: rgba(238, 228, 218, 0.35);
 }
 
-.grid-cell:last-child {
+.grid-cell:last-child, .elm-grid-cell:last-child {
     margin-right: 0;
 }
 
-.tile-container {
+.tile-container, .elm-tile-container {
     position: absolute;
     z-index: 2;
 }
@@ -1359,8 +1363,12 @@ hr {
     /*font-size: 45px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1200
 px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-128 {
         /*font-size: 25px;*/
     }
@@ -1373,7 +1381,11 @@ px) {
     /*font-size: 45px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-256 {
         /*font-size: 25px;*/
     }
@@ -1386,7 +1398,11 @@ px) {
     /*font-size: 45px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-512 {
         /*font-size: 25px;*/
     }
@@ -1399,8 +1415,13 @@ px) {
     /*font-size: 35px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
     .tile.tile-1200 {
+=======
+@media screen and (max-width: 2048px) {
+    .tile.tile-1024 {
+>>>>>>> elm
         /*font-size: 15px;*/
     }
 }
@@ -1412,7 +1433,11 @@ px) {
     /*font-size: 35px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-2048 {
         /*font-size: 15px;*/
     }
@@ -1425,7 +1450,11 @@ px) {
     /*font-size: 35px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-4096 {
         /*font-size: 15px;*/
     }
@@ -1438,7 +1467,11 @@ px) {
     /*font-size: 35px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-8192 {
         /*font-size: 15px;*/
     }
@@ -1451,7 +1484,11 @@ px) {
     /*font-size: 30px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-16384 {
         /*font-size: 10px;*/
     }
@@ -1464,7 +1501,11 @@ px) {
     /*font-size: 30px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-32768 {
         /*font-size: 10px;*/
     }
@@ -1477,7 +1518,11 @@ px) {
     /*font-size: 30px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-65536 {
         /*font-size: 10px;*/
     }
@@ -1490,7 +1535,11 @@ px) {
     /*font-size: 30px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-131072 {
         /*font-size: 10px;*/
     }
@@ -1503,7 +1552,11 @@ px) {
     /*font-size: 30px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-262144 {
         /*font-size: 10px;*/
     }
@@ -1516,7 +1569,11 @@ px) {
     /*font-size: 30px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-523288 {
         /*font-size: 10px;*/
     }
@@ -1529,7 +1586,11 @@ px) {
     /*font-size: 23px;*/
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     .tile.tile-1048576 {
         /*font-size: 5px;*/
     }
@@ -1651,7 +1712,11 @@ px) {
     margin-top: 50px;
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 1967px) {
+=======
+@media screen and (max-width: 2048px) {
+>>>>>>> elm
     html, body {
         font-size: 15px;
     }
@@ -1667,7 +1732,11 @@ px) {
     }
 
     .container {
+<<<<<<< HEAD
         width: 1090px;
+=======
+        width: 1110px; /* 550px; */
+>>>>>>> elm
         margin: 0 auto;
     }
 
@@ -1686,10 +1755,11 @@ px) {
         margin-bottom: 10px;
     }
 
-    .game-container {
-        margin-top: 40px;
-        position: relative;
+
+    .game-container, #elm-game-container {
+        margin-top: 20px;
         padding: 10px;
+<<<<<<< HEAD
         cursor: default;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -1701,6 +1771,10 @@ px) {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+=======
+        width: 550px;
+        height: 550px;
+>>>>>>> elm
     }
 
     .game-container .game-message, .game-container .saved-game-message {
@@ -1753,26 +1827,26 @@ px) {
         display: block;
     }
 
-    .grid-container {
+    .grid-container, .elm-grid-container {
         position: absolute;
         z-index: 1;
     }
 
-    .grid-row {
+    .grid-row, .elm-grid-row {
         margin-bottom: 10px;
     }
 
-    .grid-row:last-child {
+    .grid-row:last-child, .elm-grid-row:last-child {
         margin-bottom: 0;
     }
 
-    .grid-row:after {
+    .grid-row:after, .elm-grid-row:after {
         content: "";
         display: block;
         clear: both;
     }
 
-    .grid-cell {
+    .grid-cell, .elm-grid-cell {
         width: 57.5px;
         height: 57.5px;
         margin-right: 10px;
@@ -1781,13 +1855,8 @@ px) {
         background: rgba(238, 228, 218, 0.35);
     }
 
-    .grid-cell:last-child {
+    .grid-cell:last-child, .elm-grid-cell:last-child {
         margin-right: 0;
-    }
-
-    .tile-container {
-        position: absolute;
-        z-index: 2;
     }
 
     .tile {
@@ -2274,6 +2343,7 @@ px) {
     .tile.tile-position-8-8 {
         position: absolute;
         left: 473px;
+<<<<<<< HEAD
         top: 473px; }
     .tile.tile-position-8-9 {
         position: absolute;
@@ -2821,6 +2891,9 @@ px) {
         top: 1014px; }
     .game-container {
         margin-top: 20px;
+=======
+        top: 473px;
+>>>>>>> elm
     }
 
     .tile {

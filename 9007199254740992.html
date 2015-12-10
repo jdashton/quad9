@@ -47,6 +47,9 @@
     </div>
     <p class="game-intro">Join the numbers and get to the <strong>9,007,199,254,740,992 tile!</strong></p>
 
+    <div id="elm-game-container">
+    </div>
+
     <div class="game-container">
         <div class="game-message">
             <p></p>
@@ -434,8 +437,12 @@
         border-color: blue;
     }
 </style>
+<script type="text/javascript" src="quad9.js"></script>
+<script type="text/javascript">
+  var elmDiv = document.getElementById('elm-game-container');
+  Elm.embed(Elm.Quad9, elmDiv, {primer: Date.now()});
+</script>
 
 
-<div id="feedly-mini" title="feedly Mini tookit"></div>
 </body>
 </html>

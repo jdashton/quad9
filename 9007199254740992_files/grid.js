@@ -28,7 +28,7 @@ Grid.prototype.populate = function (savedArray) {
             row[y] = t ? new Tile({x: t.x, y: t.y}, t.value) : null;
         }
     }
-}
+};
 
 // Find the first available random position
 Grid.prototype.randomAvailableCell = function () {
