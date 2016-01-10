@@ -27,18 +27,18 @@ GameManager.prototype.restart = function () {
 
 GameManager.prototype.displayMessage = function () {
     this.actuator.savedMessage();
-}
+};
 
 GameManager.prototype.loadGame = function () {
     this.actuator.clearSavedMessage();
     this.setup();
-}
+};
 
 GameManager.prototype.startNew = function () {
     this.actuator.clearSavedMessage();
     this.scoreManager.clearState();
     this.setup();
-}
+};
 
 // Set up the game
 GameManager.prototype.setup = function () {
@@ -75,7 +75,7 @@ GameManager.prototype.restoreGame = function () {
     this.over = state.meta.over;
     this.won = state.meta.won;
     return true;
-}
+};
 
 GameManager.prototype.autoSave = function () {
     this.scoreManager.saveState(this.grid, {
@@ -84,7 +84,7 @@ GameManager.prototype.autoSave = function () {
         won: this.won
     });
     setTimeout('GM.autoSave()', 5000);
-}
+};
 
 // Set up the initial tiles to start the game with
 GameManager.prototype.addStartTiles = function () {

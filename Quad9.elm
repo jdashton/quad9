@@ -110,7 +110,6 @@ convertNum n =
       abbreviate (o, suf)
 
 
-
 abbreviate (n, suf) =
   case n of
     128 -> "⅛" ++ promote suf
@@ -139,6 +138,7 @@ reduceNum (n, suffix) =
 
 
 -- tile tile-2 tile-position-3-4 tile-new
+-- x and y in the CSS are 1-based, not 0-based
 showTile : IndexedTile -> Html
 showTile ((x, y), tile) =
   case tile of
