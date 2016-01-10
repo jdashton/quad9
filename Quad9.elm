@@ -177,7 +177,7 @@ type Action = Left | Right | Up | Down | Autoplay | Restart | SaveGame
 
 update action model =
   case action of
-    Left -> model
+    Left -> model |> addRandomTile
     Right -> model
     Up -> model
     Down -> model
@@ -189,6 +189,7 @@ update action model =
 -- MAIN
 
 
+main : Signal Html
 main =
   StartApp.start { model = initialModel, view = view, update = update }
 

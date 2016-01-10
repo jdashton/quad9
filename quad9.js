@@ -10622,17 +10622,6 @@ Elm.Quad9.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var update = F2(function (action,model) {
-      var _p0 = action;
-      switch (_p0.ctor)
-      {case "Left": return model;
-         case "Right": return model;
-         case "Up": return model;
-         case "Down": return model;
-         case "Autoplay": return model;
-         case "Restart": return model;
-         default: return model;}
-   });
    var SaveGame = {ctor: "SaveGame"};
    var Restart = {ctor: "Restart"};
    var Autoplay = {ctor: "Autoplay"};
@@ -10641,8 +10630,8 @@ Elm.Quad9.make = function (_elm) {
    var Right = {ctor: "Right"};
    var Left = {ctor: "Left"};
    var promote = function (s) {
-      var _p1 = s;
-      switch (_p1)
+      var _p0 = s;
+      switch (_p0)
       {case "": return "K";
          case "K": return "M";
          case "M": return "G";
@@ -10653,92 +10642,103 @@ Elm.Quad9.make = function (_elm) {
          case "Z": return "Y";
          default: return "a lot & a lot";}
    };
-   var reduceNum = function (_p2) {
+   var reduceNum = function (_p1) {
       reduceNum: while (true) {
-         var _p3 = _p2;
-         var _p5 = _p3._1;
-         var _p4 = _p3._0;
-         if (_U.cmp(_p4,512) > 0) {
-               var _v3 = {ctor: "_Tuple2",_0: _p4 / 1024 | 0,_1: promote(_p5)};
-               _p2 = _v3;
+         var _p2 = _p1;
+         var _p4 = _p2._1;
+         var _p3 = _p2._0;
+         if (_U.cmp(_p3,512) > 0) {
+               var _v2 = {ctor: "_Tuple2",_0: _p3 / 1024 | 0,_1: promote(_p4)};
+               _p1 = _v2;
                continue reduceNum;
-            } else return {ctor: "_Tuple2",_0: _p4,_1: _p5};
+            } else return {ctor: "_Tuple2",_0: _p3,_1: _p4};
       }
    };
-   var abbreviate = function (_p6) {
-      var _p7 = _p6;
-      var _p9 = _p7._1;
-      var _p8 = _p7._0;
-      switch (_p8)
-      {case 128: return A2($Basics._op["++"],"⅛",promote(_p9));
-         case 256: return A2($Basics._op["++"],"¼",promote(_p9));
-         case 512: return A2($Basics._op["++"],"½",promote(_p9));
-         default: return A2($Basics._op["++"],$Basics.toString(_p8),_p9);}
+   var abbreviate = function (_p5) {
+      var _p6 = _p5;
+      var _p8 = _p6._1;
+      var _p7 = _p6._0;
+      switch (_p7)
+      {case 128: return A2($Basics._op["++"],"⅛",promote(_p8));
+         case 256: return A2($Basics._op["++"],"¼",promote(_p8));
+         case 512: return A2($Basics._op["++"],"½",promote(_p8));
+         default: return A2($Basics._op["++"],$Basics.toString(_p7),_p8);}
    };
    var convertNum = function (n) {
-      var _p10 = reduceNum({ctor: "_Tuple2",_0: n,_1: ""});
-      var o = _p10._0;
-      var suf = _p10._1;
+      var _p9 = reduceNum({ctor: "_Tuple2",_0: n,_1: ""});
+      var o = _p9._0;
+      var suf = _p9._1;
       return abbreviate({ctor: "_Tuple2",_0: o,_1: suf});
    };
-   var showTile = function (_p11) {
-      var _p12 = _p11;
-      var _p13 = _p12._1;
-      if (_p13.ctor === "Just") {
-            var _p14 = _p13._0;
+   var showTile = function (_p10) {
+      var _p11 = _p10;
+      var _p12 = _p11._1;
+      if (_p12.ctor === "Just") {
+            var _p13 = _p12._0;
             return A2($Html.div,
             _U.list([$Html$Attributes.$class(A2($Basics._op["++"],
             "tile",
             A2($Basics._op["++"],
             " tile-",
             A2($Basics._op["++"],
-            $Basics.toString(_p14),
+            $Basics.toString(_p13),
             A2($Basics._op["++"],
             " tile-position-",
             A2($Basics._op["++"],
-            $Basics.toString(_p12._0._0 + 1),
-            A2($Basics._op["++"],"-",A2($Basics._op["++"],$Basics.toString(_p12._0._1 + 1)," tile-new"))))))))]),
-            _U.list([$Html.text(convertNum(_p14))]));
+            $Basics.toString(_p11._0._0 + 1),
+            A2($Basics._op["++"],"-",A2($Basics._op["++"],$Basics.toString(_p11._0._1 + 1)," tile-new"))))))))]),
+            _U.list([$Html.text(convertNum(_p13))]));
          } else {
             return $Html.text("");
          }
    };
-   var gridCell = function (_p15) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-cell")]),_U.list([]));};
-   var gridRow = F2(function (size,_p16) {
+   var gridCell = function (_p14) {    return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-cell")]),_U.list([]));};
+   var gridRow = F2(function (size,_p15) {
       return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-row")]),A2($List.map,gridCell,_U.range(1,size)));
    });
    var defaultBoard = function (size) {
       return A2($Html.div,_U.list([$Html$Attributes.$class("elm-grid-container")]),A2($List.map,gridRow(size),_U.range(1,size)));
    };
-   var addTile = F2(function (_p17,model) {    var _p18 = _p17;return _U.update(model,{grid: A4($Matrix.set,_p18._0._0,_p18._0._1,_p18._1,model.grid)});});
-   var realTile = function (_p19) {    var _p20 = _p19;return !_U.eq(_p20._1,$Maybe.Nothing);};
+   var addTile = F2(function (_p16,model) {    var _p17 = _p16;return _U.update(model,{grid: A4($Matrix.set,_p17._0._0,_p17._0._1,_p17._1,model.grid)});});
+   var realTile = function (_p18) {    var _p19 = _p18;return !_U.eq(_p19._1,$Maybe.Nothing);};
    var viewTiles = function (model) {
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("elm-tile-container")]),
       A2($List.map,showTile,$Array.toList(A2($Array.filter,realTile,$Matrix.toIndexedArray(model.grid)))));
    };
    var view = F2(function (address,model) {    return A2($Html.div,_U.list([]),_U.list([defaultBoard(model.size),viewTiles(model)]));});
-   var emptyTile = function (_p21) {    var _p22 = _p21;return _U.eq(_p22._1,$Maybe.Nothing);};
+   var emptyTile = function (_p20) {    var _p21 = _p20;return _U.eq(_p21._1,$Maybe.Nothing);};
    var availableCells = function (model) {    return A2($Array.filter,emptyTile,$Matrix.toIndexedArray(model.grid));};
    var addRandomTile = function (model) {
       var cells = availableCells(model);
-      var _p23 = A2($Random.generate,A2($Random.$int,0,$Array.length(cells) - 1),model.seed);
-      var i = _p23._0;
-      var s = _p23._1;
-      var _p24 = A2($Random.generate,A2($Random.$int,1,10),s);
-      var v = _p24._0;
-      var s$ = _p24._1;
+      var _p22 = A2($Random.generate,A2($Random.$int,0,$Array.length(cells) - 1),model.seed);
+      var i = _p22._0;
+      var s = _p22._1;
+      var _p23 = A2($Random.generate,A2($Random.$int,1,10),s);
+      var v = _p23._0;
+      var s$ = _p23._1;
       var tileVal = _U.cmp(v,9) > 0 ? 4 : 2;
       var pos = function () {
-         var _p25 = A2($Array.get,i,cells);
-         if (_p25.ctor === "Just") {
-               return _p25._0._0;
+         var _p24 = A2($Array.get,i,cells);
+         if (_p24.ctor === "Just") {
+               return _p24._0._0;
             } else {
                return {ctor: "_Tuple2",_0: 7,_1: 7};
             }
       }();
       return A2(addTile,{ctor: "_Tuple2",_0: pos,_1: $Maybe.Just(tileVal)},_U.update(model,{seed: s$}));
    };
+   var update = F2(function (action,model) {
+      var _p25 = action;
+      switch (_p25.ctor)
+      {case "Left": return addRandomTile(model);
+         case "Right": return model;
+         case "Up": return model;
+         case "Down": return model;
+         case "Autoplay": return model;
+         case "Restart": return model;
+         default: return model;}
+   });
    var initialSize = 8;
    var GameState = F4(function (a,b,c,d) {    return {grid: a,size: b,moves: c,seed: d};});
    var primer = Elm.Native.Port.make(_elm).inbound("primer",
