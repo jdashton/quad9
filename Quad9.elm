@@ -202,7 +202,7 @@ inputs =
 
 
 keysToAction : { Int, Int } -> Action
-arrowsToAction {x, y} =
+keysToAction {x, y} =
   case x of
     1 -> 
 
@@ -225,4 +225,30 @@ app =
 main : Signal Html
 main =
   app.html
+
+
+----------------------------
+-- implement workaround for Keyboard.presses
+type alias KeyboardState = { temp : Set KeyCode
+                           , actualKey : Maybe KeyCode
+                           }
+keyboardState = { temp = Set.empty
+                , actualKey = Nothing
+                }
+
+
+keyboardStep : Set KeyCode -> KeyboardState -> KeyboardState
+keyboardStep newKeys state =
+  let
+    actualKey = List.head <| Set.toList <| newKeys `Set.diff` state.temp
+  in
+    { state |
+      temp <- newKeys
+    , actualKey <- actualKey
+    }
+
+
+presses : Signal (Maybe KeyCode)
+presses = (\state -> state.actualKey)
+          <~ Signal.foldp keyboardStep keyboardState keysDown
 
