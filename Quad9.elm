@@ -3,11 +3,14 @@ module Quad9 where
 import Html exposing (div, Html, text)
 import Html.Attributes exposing (class)
 -- import Html.Events exposing (..)
-import StartApp.Simple as StartApp
+import StartApp
 import List exposing (map)
 import Matrix exposing (repeat, Matrix, toIndexedArray, set)
 import Array exposing (filter, Array, toList, get, length)
 import Random exposing (Seed)
+import Keyboard exposing (arrows)
+import Effects exposing (Effects, Never)
+import Task exposing (Task)
   
 
 -- MODEL
@@ -24,10 +27,10 @@ type alias IndexedTile =
 
 
 type alias GameState =
-  { grid : Matrix (Maybe Tile)
-  , size : Int
+  { grid  : Matrix (Maybe Tile)
+  , size  : Int
   , moves : Int
-  , seed : Seed
+  , seed  : Seed
   }
 
 
@@ -45,6 +48,11 @@ initialModel =
     |> addRandomTile -- ((3, 5), Just (128 * 1024))
     |> addRandomTile -- ((1, 1), Just (256 * 1024 * 1024))
     -- |> addTile ((2, 3), Just (512 * 1024 * 1024 * 1024))
+
+
+init : (GameState, Effects Action)
+init =
+  (initialModel, Effects.none)
 
 
 emptyTile : IndexedTile -> Bool
@@ -175,21 +183,46 @@ view address model =
 type Action = Left | Right | Up | Down | Autoplay | Restart | SaveGame
 
 
+update : Action -> GameState -> (GameState, Effects Action)
 update action model =
   case action of
-    Left -> model |> addRandomTile
-    Right -> model
-    Up -> model
-    Down -> model
-    Autoplay -> model
-    Restart -> model
-    SaveGame -> model
+    Left -> (model |> addRandomTile, Effects.none)
+    Right -> (model, Effects.none)
+    Up -> (model, Effects.none)
+    Down -> (model, Effects.none)
+    Autoplay -> (model, Effects.none)
+    Restart -> (model, Effects.none)
+    SaveGame -> (model, Effects.none)
+
+
+-- INPUTS
+inputs : List (Signal { x : Int, y : Int })
+inputs =
+  [Signal.map keysToAction Keyboard.keysDown]
+
+
+keysToAction : { Int, Int } -> Action
+arrowsToAction {x, y} =
+  case x of
+    1 -> 
+
+
+port tasks : Signal (Task Never ())
+port tasks =
+  app.tasks
 
 
 -- MAIN
 
+app =
+  StartApp.start 
+    { init   = init
+    , update = update
+    , view   = view
+    , inputs = []
+    }
 
 main : Signal Html
 main =
-  StartApp.start { model = initialModel, view = view, update = update }
+  app.html
 
