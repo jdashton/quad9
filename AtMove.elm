@@ -1,8 +1,8 @@
--- correct roguelike movement by using a workaround for Keyboard
+module AtMove where
 
+-- correct roguelike movement by using a workaround for Keyboard
 -- See https://github.com/elm-lang/core/issues/326 for discussion
 
-import Color
 import Graphics.Collage exposing (Form, text, collage)
 import Graphics.Element exposing (Element, container, middle)
 import Keyboard exposing (keysDown)
@@ -14,7 +14,7 @@ import Window
 
 
 -- CONFIG
-screenSize = 20
+screenSize = 30
 
 -- HELPERS
 
@@ -26,18 +26,23 @@ defPlayer = { x = screenSize//2
             , y = screenSize//2
             }
 
+
+----------
+-- PORTS
+
+port keyStrokes : Signal KeyCode
+
+
 -- UPDATE
 -- 37,38,39,40 ~ left,up,right,down
-stepPlayer : Maybe KeyCode -> Player -> Player
+stepPlayer : KeyCode -> Player -> Player
 stepPlayer key player =
   case key of
-    Nothing -> player
-    Just key ->
-      if      key == 37 then { player | x = player.x - 1, y = player.y + 0 }
-      else if key == 38 then { player | x = player.x + 0, y = player.y - 1 }
-      else if key == 39 then { player | x = player.x + 1, y = player.y + 0 }
-      else if key == 40 then { player | x = player.x + 0, y = player.y + 1 }
-      else                     player
+    37 -> { player | x = player.x - 1, y = player.y + 0 } -- left
+    38 -> { player | x = player.x + 0, y = player.y - 1 } -- up
+    39 -> { player | x = player.x + 1, y = player.y + 0 } -- right
+    40 -> { player | x = player.x + 0, y = player.y + 1 } -- down
+    _  ->   player
 
 
 -- VIEW
@@ -74,7 +79,7 @@ view (w,h) {x,y} =
 -- MAIN
 main : Signal Element
 -- main = view <~ Window.dimensions ~ Signal.foldp stepPlayer defPlayer Keyboard.arrows
-main = map2 view Window.dimensions (foldp stepPlayer defPlayer presses)
+main = map2 view Window.dimensions (foldp stepPlayer defPlayer keyStrokes)
 
 ----------------------------
 -- implement workaround for Keyboard.presses
@@ -104,4 +109,3 @@ keyboardStep newKeys state =
 presses : Signal (Maybe KeyCode)
 presses =
   map (\state -> state.actualKey) (foldp keyboardStep keyboardState keysDown)
-

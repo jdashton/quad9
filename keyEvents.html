@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title></title>
+  <script src="at_move.js"></script>
+</head>
+<body>
+<p>Arrow keys should move the @ symbol around the screen.</p>
+<div id="elm-div" style="width:400px;height:400px;"></div>
+<script>
+  var div = document.getElementById('elm-div');
+  var mover = Elm.embed(Elm.AtMove, div, {keyStrokes: 0});
+  var desiredKeys = new Set([32, 37, 38, 39, 40]);
+
+  document.addEventListener("keydown", function (event) {
+    var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+                    event.shiftKey;
+    if (!modifiers) {
+      if (desiredKeys.has(event.which)) {
+        event.preventDefault();
+        mover.ports.keyStrokes.send(event.which);
+      }
+    }
+  });
+</script>
+</body>
+</html>

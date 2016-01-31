@@ -7631,11 +7631,11 @@ Elm.Window.make = function (_elm) {
                                ,width: width
                                ,height: height};
 };
-Elm.Main = Elm.Main || {};
-Elm.Main.make = function (_elm) {
+Elm.AtMove = Elm.AtMove || {};
+Elm.AtMove.make = function (_elm) {
    "use strict";
-   _elm.Main = _elm.Main || {};
-   if (_elm.Main.values) return _elm.Main.values;
+   _elm.AtMove = _elm.AtMove || {};
+   if (_elm.AtMove.values) return _elm.AtMove.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Char = Elm.Char.make(_elm),
@@ -7651,6 +7651,12 @@ Elm.Main.make = function (_elm) {
    $Text = Elm.Text.make(_elm),
    $Window = Elm.Window.make(_elm);
    var _op = {};
+   var keyStrokes = Elm.Native.Port.make(_elm).inboundSignal("keyStrokes",
+   "Int",
+   function (v) {
+      return typeof v === "number" && isFinite(v) && Math.floor(v) === v ? v : _U.badPort("an integer",
+      v);
+   });
    var keyboardStep = F2(function (newKeys,state) {
       var actualKey = $List.head($Set.toList(A2($Set.diff,
       newKeys,
@@ -7671,73 +7677,67 @@ Elm.Main.make = function (_elm) {
       return {temp: a,actualKey: b};
    });
    var stepPlayer = F2(function (key,player) {
-      var _p0 = key;
-      if (_p0.ctor === "Nothing") {
-            return player;
-         } else {
-            var _p1 = _p0._0;
-            return _U.eq(_p1,37) ? _U.update(player,
-            {x: player.x - 1,y: player.y + 0}) : _U.eq(_p1,
-            38) ? _U.update(player,
-            {x: player.x + 0,y: player.y - 1}) : _U.eq(_p1,
-            39) ? _U.update(player,
-            {x: player.x + 1,y: player.y + 0}) : _U.eq(_p1,
-            40) ? _U.update(player,
-            {x: player.x + 0,y: player.y + 1}) : player;
-         }
+      return _U.eq(key,3) ? _U.update(player,
+      {x: player.x - 1,y: player.y + 0}) : _U.eq(key,
+      0) ? _U.update(player,
+      {x: player.x + 0,y: player.y - 1}) : _U.eq(key,
+      1) ? _U.update(player,
+      {x: player.x + 1,y: player.y + 0}) : _U.eq(key,
+      2) ? _U.update(player,
+      {x: player.x + 0,y: player.y + 1}) : player;
    });
    var Player = F2(function (a,b) {    return {x: a,y: b};});
-   var screenSize = 20;
+   var screenSize = 30;
    var defPlayer = {x: screenSize / 2 | 0,y: screenSize / 2 | 0};
-   var move = F3(function (_p3,_p2,form) {
-      var _p4 = _p3;
-      var _p5 = _p2;
+   var move = F3(function (_p1,_p0,form) {
+      var _p2 = _p1;
+      var _p3 = _p0;
       var screenSize$ = $Basics.toFloat(screenSize);
-      var y$ = $Basics.toFloat(_p5._1);
-      var x$ = $Basics.toFloat(_p5._0);
-      var h$ = $Basics.toFloat(_p4._1);
+      var y$ = $Basics.toFloat(_p3._1);
+      var x$ = $Basics.toFloat(_p3._0);
+      var h$ = $Basics.toFloat(_p2._1);
       var height = h$ / screenSize$;
       var newY = h$ / 2 - y$ * height - height / 2;
-      var w$ = $Basics.toFloat(_p4._0);
+      var w$ = $Basics.toFloat(_p2._0);
       var width = w$ / screenSize$;
       var newX = (0 - w$) / 2 + x$ * width + width / 2;
       return A2($Graphics$Collage.move,
       {ctor: "_Tuple2",_0: newX,_1: newY},
       form);
    });
-   var view = F2(function (_p7,_p6) {
-      var _p8 = _p7;
-      var _p11 = _p8._0;
-      var _p10 = _p8._1;
-      var _p9 = _p6;
-      var s = A2($Basics.min,_p11,_p10);
+   var view = F2(function (_p5,_p4) {
+      var _p6 = _p5;
+      var _p9 = _p6._0;
+      var _p8 = _p6._1;
+      var _p7 = _p4;
+      var s = A2($Basics.min,_p9,_p8);
       var playerForm = $Graphics$Collage.text(A2($Text.height,
       $Basics.toFloat(s) / screenSize,
       $Text.fromString("@")));
       var forms = _U.list([A3(move,
       {ctor: "_Tuple2",_0: s,_1: s},
-      {ctor: "_Tuple2",_0: _p9.x,_1: _p9.y},
+      {ctor: "_Tuple2",_0: _p7.x,_1: _p7.y},
       playerForm)]);
       return A4($Graphics$Element.container,
-      _p11,
-      _p10,
+      _p9,
+      _p8,
       $Graphics$Element.middle,
       A3($Graphics$Collage.collage,s,s,forms));
    });
    var main = A3($Signal.map2,
    view,
    $Window.dimensions,
-   A3($Signal.foldp,stepPlayer,defPlayer,presses));
-   return _elm.Main.values = {_op: _op
-                             ,screenSize: screenSize
-                             ,Player: Player
-                             ,defPlayer: defPlayer
-                             ,stepPlayer: stepPlayer
-                             ,move: move
-                             ,view: view
-                             ,main: main
-                             ,KeyboardState: KeyboardState
-                             ,keyboardState: keyboardState
-                             ,keyboardStep: keyboardStep
-                             ,presses: presses};
+   A3($Signal.foldp,stepPlayer,defPlayer,keyStrokes));
+   return _elm.AtMove.values = {_op: _op
+                               ,screenSize: screenSize
+                               ,Player: Player
+                               ,defPlayer: defPlayer
+                               ,stepPlayer: stepPlayer
+                               ,move: move
+                               ,view: view
+                               ,main: main
+                               ,KeyboardState: KeyboardState
+                               ,keyboardState: keyboardState
+                               ,keyboardStep: keyboardStep
+                               ,presses: presses};
 };
